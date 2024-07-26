@@ -1,3 +1,4 @@
+
 services:
   backend:
     build:
@@ -6,7 +7,7 @@ services:
       target: development
     container_name: backend
     init: true
-    command: ["pnpm", "run", "start:dev"]
+    working_dir: /app
     ports:
       - "8080:8080"
     env_file:
@@ -14,10 +15,11 @@ services:
     depends_on:
       - db
       - redis
-      # - pgadmin
     volumes:
       - .:/app/
+      - /app/node_modules
     # restart: unless-stopped
+
   db:
     image: postgres:14-alpine
     container_name: postgres
@@ -38,17 +40,6 @@ services:
     ports:
       - "6379:6379"
     command: ["redis-server", "--requirepass", "${REDIS_PASSWORD}"]
-
-  # pgadmin:
-  #   image: dpage/pgadmin4
-  #   container_name: pgadmin
-  #   environment:
-  #     PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
-  #     PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
-  #   ports:
-  #     - "5050:80"
-  #   depends_on:
-  #     - db
 
 volumes:
   postgres_data:
