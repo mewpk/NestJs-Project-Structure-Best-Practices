@@ -12,11 +12,8 @@ RUN npm install -g pnpm @nestjs/cli && pnpm install
 
 COPY --chown=node:node . .
 
-RUN pnpx prisma generate
-
-
 # Ensure prisma generate runs before starting the application
-CMD ["sh", "-c", "pnpx prisma generate && nest start --watch"]
+CMD ["sh", "-c", "pnpx prisma generate && pnpx prisma db push && nest start --watch"]
 
 ###################
 # BUILD FOR PRODUCTION
