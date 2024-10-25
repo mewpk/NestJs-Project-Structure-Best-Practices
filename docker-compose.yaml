@@ -21,6 +21,7 @@ services:
     volumes:
       - .:/app
       - /app/node_modules
+      - ./logs:/app/logs
     restart: unless-stopped
     networks:
       - app-network
