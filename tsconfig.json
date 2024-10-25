@@ -22,6 +22,7 @@
       "@config/*": ["src/config/*"],
       "@modules/*": ["src/modules/*"],
       "@generated/*": ["generated/*"],
+      "@utils/*": ["src/utils/*"],
     }
   }
 }
