@@ -20,7 +20,7 @@ RUN npm install -g pnpm @nestjs/cli && pnpm install --frozen-lockfile
 COPY --chown=node:node . .
 
 # Run Prisma and start the app in watch mode
-CMD ["sh", "-c", "pnpx prisma generate --schema prisma/master.prisma && pnpx prisma generate --schema prisma/slave.prisma && pnpx ts-node-dev --respawn --transpile-only src/main.ts"]
+CMD ["sh", "-c", "pnpx prisma generate --schema prisma/master.prisma && pnpx prisma generate --schema prisma/slave.prisma && pnpx ts-node-dev --respawn --transpile-only -r tsconfig-paths/register src/main.ts"]
 
 ###################
 # BUILD

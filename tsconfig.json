@@ -18,10 +18,10 @@
     "forceConsistentCasingInFileNames": false,
     "noFallthroughCasesInSwitch": false,
     "paths": {
-      "@prisma/*": ["./src/prisma/*"],
-      "@config/*": ["./src/config/*"],
-      "@modules/*": ["./src/modules/*"],
-      "@generated/*": ["./generated/*"],
+      "@prisma/*": ["src/prisma/*"],
+      "@config/*": ["src/config/*"],
+      "@modules/*": ["src/modules/*"],
+      "@generated/*": ["generated/*"],
     }
   }
 }
