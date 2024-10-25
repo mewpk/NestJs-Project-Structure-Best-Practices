@@ -3,7 +3,8 @@ import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
 import { JwtModule } from '@nestjs/jwt';
 import { JwtStrategy } from './jwt.strategy';  // Import the strategy here
-
+import { PrismaService } from '@prisma/prisma.service';
+import { RedisService } from '@config/redis.config';
 
 @Module({
   imports: [
@@ -11,8 +12,9 @@ import { JwtStrategy } from './jwt.strategy';  // Import the strategy here
       secret: process.env.JWT_SECRET,
       signOptions: { expiresIn: '1h' },
     }),
+
   ],
-  providers: [AuthService, JwtStrategy],  // Provide JwtStrategy
+  providers: [AuthService, JwtStrategy, PrismaService, RedisService],
   controllers: [AuthController],
 })
-export class AuthModule {}
+export class AuthModule { }
