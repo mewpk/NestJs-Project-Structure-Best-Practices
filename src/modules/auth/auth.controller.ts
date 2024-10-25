@@ -2,7 +2,7 @@ import { Controller, Post, Body, Get, Req, UseGuards, HttpException, HttpStatus 
 import { AuthService } from './auth.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { LoginUserDto } from './dto/login-user.dto';
-import { JwtAuthGuard } from './jwt-auth.guard';  
+import { JwtAuthGuard } from '@guards/jwt-auth.guard';  
 import { successResponse, errorResponse } from '@utils/response.utils';
 
 @Controller('auth')

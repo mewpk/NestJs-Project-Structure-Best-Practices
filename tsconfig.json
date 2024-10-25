@@ -23,6 +23,7 @@
       "@modules/*": ["src/modules/*"],
       "@generated/*": ["generated/*"],
       "@utils/*": ["src/utils/*"],
+      "@guards/*": ["src/guards/*"],
     }
   }
 }
