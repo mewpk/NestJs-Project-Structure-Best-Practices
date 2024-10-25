@@ -20,7 +20,10 @@ RUN npm install -g pnpm @nestjs/cli && pnpm install --frozen-lockfile
 COPY --chown=node:node . .
 
 # Run Prisma and start the app in watch mode
-CMD ["sh", "-c", "pnpx prisma generate && pnpx prisma db push && nest start --watch"]
+CMD ["sh", "-c", "pnpx prisma generate && \
+    pnpx prisma migrate dev --name init --schema prisma/master.prisma && \
+    pnpx prisma migrate dev --name init --schema prisma/slave.prisma && \
+    nest start --watch"]
 
 ###################
 # BUILD
