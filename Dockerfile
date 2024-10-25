@@ -1,51 +1,46 @@
 ###################
-# BUILD FOR LOCAL DEVELOPMENT
+# BASE IMAGE
 ###################
 
-FROM node:22-alpine As development
+FROM node:22-alpine AS base
 
 WORKDIR /app
 
-COPY --chown=node:node package*.json pnpm-lock.yaml ./
+###################
+# DEVELOPMENT
+###################
 
+FROM base AS development
+
+COPY --chown=node:node package*.json pnpm-lock.yaml ./
 RUN npm install -g pnpm @nestjs/cli && pnpm install
 
 COPY --chown=node:node . .
 
-# Ensure prisma generate runs before starting the application
+# Ensure Prisma generate runs before starting the application
 CMD ["sh", "-c", "pnpx prisma generate && pnpx prisma db push && nest start --watch"]
 
 ###################
-# BUILD FOR PRODUCTION
+# BUILD
 ###################
 
-FROM node:22-alpine As build
+FROM base AS build
 
-WORKDIR /app
-
-COPY --chown=node:node package*.json pnpm-lock.yaml ./
-
-COPY --chown=node:node --from=development /app/node_modules ./node_modules
-
+COPY --from=development /app/node_modules ./node_modules
 COPY --chown=node:node . .
 
-RUN pnpm run build
-
-ENV NODE_ENV production
-
-RUN pnpm install --prod && pnpm cache clean --force
-
-USER node
+RUN pnpm run build && pnpm prune --prod && pnpm cache clean --force
 
 ###################
 # PRODUCTION
 ###################
 
-FROM node:22-alpine As production
+FROM base AS production
 
-WORKDIR /app
+ENV NODE_ENV=production
+USER node
 
-COPY --chown=node:node --from=build /app/node_modules ./node_modules
-COPY --chown=node:node --from=build /app/dist ./dist
+COPY --from=build /app/node_modules ./node_modules
+COPY --from=build /app/dist ./dist
 
 CMD ["node", "dist/main.js"]
