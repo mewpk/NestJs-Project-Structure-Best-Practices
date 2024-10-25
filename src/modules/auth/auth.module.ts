@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
 import { JwtModule } from '@nestjs/jwt';
-import { JwtStrategy } from '@guards/jwt.strategy';  // Import the strategy here
+import { JwtStrategy } from '@guards/jwt.strategy'; 
 import { PrismaService } from '@prisma/prisma.service';
 import { RedisService } from '@config/redis.config';
 

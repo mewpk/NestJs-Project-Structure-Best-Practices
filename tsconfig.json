@@ -24,6 +24,7 @@
       "@generated/*": ["generated/*"],
       "@utils/*": ["src/utils/*"],
       "@guards/*": ["src/guards/*"],
+      "@middlewares/*": ["src/middlewares/*"],
     }
   }
 }
