@@ -11,7 +11,7 @@ export class AuthService {
   ) {}
 
   async createUser(createUserDto: CreateUserDto) {
-    const user = await this.prisma.user.create({
+    const user = await this.prisma.db1.user.create({
       data: createUserDto,
     });
 
@@ -29,7 +29,7 @@ export class AuthService {
     }
 
     // If not cached, fetch from database
-    const user = await this.prisma.user.findUnique({
+    const user = await this.prisma.db1.user.findUnique({
       where: { id: userId },
     });
 
