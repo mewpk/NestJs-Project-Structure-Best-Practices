@@ -4,14 +4,17 @@ import { AppConfigModule } from '@config/config.module';
 import { AuthModule } from '@modules/auth/auth.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { DeviceController } from '@modules/device/device.controller';
+import { DeviceModule } from '@modules/device/device.module';
 
 @Module({
   imports: [
     PrismaModule,
     AppConfigModule,
     AuthModule,
+    DeviceModule,
   ],
-  controllers : [AppController ],
+  controllers : [AppController, DeviceController ],
   providers: [AppService],
 })
 export class AppModule {}
