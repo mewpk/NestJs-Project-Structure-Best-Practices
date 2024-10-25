@@ -1,6 +1,6 @@
 import { Injectable, OnModuleInit, OnModuleDestroy } from '@nestjs/common';
-import { PrismaClient as PrismaClientDb1 } from '../../generated/client_master';
-import { PrismaClient as PrismaClientDb2 } from '../../generated/client_slave';
+import { PrismaClient as PrismaClientDb1 } from '@generated/client_master';
+import { PrismaClient as PrismaClientDb2 } from '@generated/client_slave';
 
 @Injectable()
 export class PrismaService implements OnModuleInit, OnModuleDestroy {
