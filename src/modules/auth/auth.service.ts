@@ -45,7 +45,7 @@ export class AuthService {
     return null;
   }
 
-  // Login and generate JWT
+
   async login(loginUserDto: LoginUserDto) {
     const user = await this.validateUser(loginUserDto.email, loginUserDto.password);
     if (!user) {
@@ -61,13 +61,12 @@ export class AuthService {
     return { accessToken: token };
   }
 
-  // Logout by clearing the session in Redis
+
   async logout(userId: string) {
     await this.redisService.getClient().del(`session:${userId}`);
     return { message: 'Logged out successfully' };
   }
 
-  // Get user profile by user ID
   async getProfile(userId: string) {
     return this.prisma.db1.user.findUnique({ where: { id: userId } });
   }

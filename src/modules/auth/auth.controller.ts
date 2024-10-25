@@ -9,7 +9,6 @@ import { successResponse, errorResponse } from '@utils/response.utils';
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
-  // Registration route
   @Post('register')
   async register(@Body() createUserDto: CreateUserDto) {
     try {
@@ -20,7 +19,6 @@ export class AuthController {
     }
   }
 
-  // Login route
   @Post('login')
   async login(@Body() loginUserDto: LoginUserDto) {
     try {
@@ -31,7 +29,6 @@ export class AuthController {
     }
   }
 
-  // Protected route to get the user profile
   @UseGuards(JwtAuthGuard)
   @Get('profile')
   async getProfile(@Req() req) {
@@ -40,7 +37,6 @@ export class AuthController {
     return successResponse(user, 'Profile fetched successfully');
   }
 
-  // Logout route
   @UseGuards(JwtAuthGuard)
   @Post('logout')
   async logout(@Req() req) {
