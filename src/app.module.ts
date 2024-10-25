@@ -1,12 +1,12 @@
 import { MiddlewareConsumer, Module ,NestModule } from '@nestjs/common';
 import { PrismaModule } from '@prisma/prisma.module';
-import { AppConfigModule } from '@config/config.module';
+import { AppConfigModule } from 'src/configs/config.module';
 import { AuthModule } from '@modules/auth/auth.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { DeviceController } from '@modules/device/device.controller';
 import { DeviceModule } from '@modules/device/device.module';
-import { CustomLoggerService } from '@config/logger.config';
+import { CustomLoggerService } from 'src/configs/logger.config';
 import { RequestLoggerMiddleware } from '@middlewares/request-logger.middleware';
 
 @Module({

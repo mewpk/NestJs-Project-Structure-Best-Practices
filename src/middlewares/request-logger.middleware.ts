@@ -1,6 +1,6 @@
 
 import { Injectable, NestMiddleware } from '@nestjs/common';
-import { CustomLoggerService } from '@config/logger.config'; // Adjust the import path according to your project structure
+import { CustomLoggerService } from 'src/configs/logger.config'; // Adjust the import path according to your project structure
 
 @Injectable()
 export class RequestLoggerMiddleware implements NestMiddleware {

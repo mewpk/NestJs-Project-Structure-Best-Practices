@@ -2,7 +2,7 @@ import { Controller, Post, Body, Get, Req, UseGuards } from '@nestjs/common';
 import { DeviceService } from './device.service';
 import { CreateDeviceDto } from './dto/create-device.dto';
 import { DeviceGuard } from '@guards/device.guard';
-import { successResponse, errorResponse } from '@utils/response.utils';
+import { successResponse, errorResponse } from '@utils/response.util';
 
 @Controller('devices')
 export class DeviceController {

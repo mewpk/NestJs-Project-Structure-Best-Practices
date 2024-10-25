@@ -3,7 +3,7 @@ import { AuthService } from './auth.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { LoginUserDto } from './dto/login-user.dto';
 import { JwtAuthGuard } from '@guards/jwt-auth.guard';  
-import { successResponse, errorResponse } from '@utils/response.utils';
+import { successResponse, errorResponse } from '@utils/response.util';
 
 @Controller('auth')
 export class AuthController {

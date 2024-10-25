@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { DeviceController } from './device.controller';
 import { DeviceService } from './device.service';
 import { PrismaService } from '@prisma/prisma.service';
-import { RedisService } from '@config/redis.config';
+import { RedisService } from 'src/configs/redis.config';
 
 @Module({
   controllers: [DeviceController],
