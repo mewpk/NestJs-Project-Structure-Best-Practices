@@ -42,10 +42,10 @@ export class CustomLoggerService implements LoggerService {
   }
 
   requestLog(req: any) {
-    const userId = req.user ? req.user.id : 'anonymous'; // Adjust based on your auth setup
+    // const userId = req.user ? req.user.id : 'anonymous'; // Adjust based on your auth setup
     this.logger.info({
       message: 'Incoming Request',
-      userId,
+      // userId,
       method: req.method,
       url: req.url,
       headers: req.headers,
