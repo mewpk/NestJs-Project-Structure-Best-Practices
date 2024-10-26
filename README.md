@@ -1,73 +1,67 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+# Project Name
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+## Overview
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+This project uses Docker and Docker Compose to set up a full development environment, which includes:
 
-## Description
+- A **Node.js** backend service with **NestJS**
+- Two **PostgreSQL** databases
+- **Redis** caching server
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+The backend service is configured for both development and production environments with multistage Docker builds, using **pnpm** for package management and **Prisma** for ORM with support for two databases.
 
-## Installation
+## Prerequisites
 
-```bash
-$ pnpm install
-```
+To run this project, make sure you have the following installed:
 
-## Running the app
+- **Docker**: [Download and Install Docker](https://docs.docker.com/get-docker/)
+- **Docker Compose**: (Installed automatically with Docker Desktop)
 
-```bash
-# development
-$ pnpm run start
+## Docker Services
 
-# watch mode
-$ pnpm run start:dev
+The `docker-compose.yml` defines the following services:
 
-# production mode
-$ pnpm run start:prod
-```
+- **backend**: The Node.js/NestJS application.
+- **db**: Primary PostgreSQL database.
+- **db2**: Secondary PostgreSQL database.
+- **redis**: Redis server for caching.
 
-## Test
+## Docker Images and Build Stages
 
-```bash
-# unit tests
-$ pnpm run test
+- **base**: Installs `pnpm` and defines the work directory.
+- **development**: Installs development dependencies, including `@nestjs/cli` and runs the application in watch mode.
+- **build**: Builds the production-ready application and prunes unnecessary dependencies.
+- **production**: Optimizes image size by copying only necessary files for production.
 
-# e2e tests
-$ pnpm run test:e2e
+## Setup and Usage
 
-# test coverage
-$ pnpm run test:cov
-```
+### Build and Run
 
-## Support
+1. **Clone the repository**:
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+   ```bash
+   git clone https://github.com/mewpk/NestJs-Project-Structure-Best-Practices.git
+   cd NestJs-Project-Structure-Best-Practices
+   ```
 
-## Stay in touch
+2. **Create a `.env` file**: At the root directory, create a `.env` file based on the `.env.example` file provided. Copy the contents of `.env.example` to `.env` and update the environment variables with your own configuration values.
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+3. **Build and run the services**:
 
-## License
+   ```bash
+   docker-compose up --build -d
+   ```
 
-Nest is [MIT licensed](LICENSE).
+4. **Access the services**:
+   - **Backend**: `http://localhost:8080`
+   - **Primary Database (db)**: `localhost:5432`
+   - **Secondary Database (db2)**: `localhost:5433`
+   - **Redis**: `localhost:6379`
+
+### Health Checks
+
+Health checks are implemented for each service:
+
+- **Backend**: Checks `http://localhost:8080/health`
+- **db** and **db2**: Uses `pg_isready` command
+- **Redis**: Uses `redis-cli ping`
