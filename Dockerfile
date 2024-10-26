@@ -29,8 +29,9 @@ RUN pnpm install --frozen-lockfile
 # Copy the rest of the application code
 COPY --chown=node:node . .
 
+
 # Run Prisma and start the app in watch mode
-CMD ["sh", "-c", "pnpx prisma generate --schema prisma/master.prisma && pnpx prisma db push  --schema prisma/master.prisma  && pnpx prisma generate --schema prisma/slave.prisma && pnpx prisma db push --schema prisma/slave.prisma && pnpx ts-node-dev --watch --respawn --transpile-only --poll -r tsconfig-paths/register src/main.ts"]
+CMD ["sh", "-c", "pnpx prisma db push  --schema prisma/master.prisma  && pnpx prisma db push --schema prisma/slave.prisma && pnpx ts-node-dev --watch --respawn --transpile-only --poll -r tsconfig-paths/register src/main.ts"]
 
 ###################
 # BUILD
