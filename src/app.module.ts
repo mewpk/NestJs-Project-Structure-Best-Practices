@@ -8,6 +8,7 @@ import { DeviceController } from '@modules/device/device.controller';
 import { DeviceModule } from '@modules/device/device.module';
 import { CustomLoggerService } from 'src/configs/logger.config';
 import { RequestLoggerMiddleware } from '@middlewares/request-logger.middleware';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
@@ -15,6 +16,11 @@ import { RequestLoggerMiddleware } from '@middlewares/request-logger.middleware'
     AppConfigModule,
     AuthModule,
     DeviceModule,
+    ConfigModule.forRoot(
+      {
+        envFilePath: '.env',
+      }
+    )
   ],
   controllers : [AppController, DeviceController ],
   providers: [AppService,CustomLoggerService],

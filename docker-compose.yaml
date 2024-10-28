@@ -1,36 +1,36 @@
 services:
-  backend:
-    build:
-      context: .
-      dockerfile: Dockerfile
-      target: development
-    container_name: backend
-    init: true
-    working_dir: /app
-    ports:
-      - "8080:8080"
-    env_file:
-      - .env
-    depends_on:
-      db:
-        condition: service_healthy
-      db2:
-        condition: service_healthy
-      redis:
-        condition: service_healthy
-    volumes:
-      - .:/app
-      - /app/node_modules
-      - ./logs:/app/logs
-    restart: unless-stopped
-    networks:
-      - app-network
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
-      interval: 30s
-      timeout: 10s
-      retries: 5
-      start_period: 10s
+  # backend:
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile
+  #     target: development
+  #   container_name: backend
+  #   init: true
+  #   working_dir: /app
+  #   ports:
+  #     - "8080:8080"
+  #   env_file:
+  #     - .env
+  #   depends_on:
+  #     db:
+  #       condition: service_healthy
+  #     db2:
+  #       condition: service_healthy
+  #     redis:
+  #       condition: service_healthy
+  #   volumes:
+  #     - .:/app
+  #     - /app/node_modules
+  #     - ./logs:/app/logs
+  #   restart: unless-stopped
+  #   networks:
+  #     - app-network
+  #   healthcheck:
+  #     test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+  #     interval: 30s
+  #     timeout: 10s
+  #     retries: 5
+  #     start_period: 10s
 
   db:
     image: postgres:17
@@ -43,6 +43,8 @@ services:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
+      - ./postgresql.conf:/var/lib/postgresql/data/postgresql.conf  # Mount the custom config
+    command: ["postgres", "-c", "config_file=/var/lib/postgresql/data/postgresql.conf"]  # Specify custom config
     restart: unless-stopped
     networks:
       - app-network
@@ -64,6 +66,8 @@ services:
       - "5433:5432"
     volumes:
       - postgres_data_2:/var/lib/postgresql/data
+      - ./postgresql.conf:/var/lib/postgresql/data/postgresql.conf  # Mount the custom config
+    command: ["postgres", "-c", "config_file=/var/lib/postgresql/data/postgresql.conf"]  # Specify custom config
     restart: unless-stopped
     networks:
       - app-network
